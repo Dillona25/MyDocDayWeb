@@ -121,18 +121,18 @@ export const AddAppointmentModal = () => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-4 sm:py-8"
       role="presentation"
       onMouseDown={closeAddAppointmentModal}
     >
       <section
         aria-modal="true"
         aria-labelledby="add-appointment-modal-title"
-        className="w-full max-w-lg rounded-xl bg-white p-6 shadow-[0_24px_70px_rgb(15_23_42/28%)]"
+        className="flex max-h-[calc(100dvh-2rem)] w-full max-w-lg flex-col overflow-hidden rounded-xl bg-white shadow-[0_24px_70px_rgb(15_23_42/28%)] sm:max-h-[calc(100dvh-4rem)]"
         role="dialog"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between gap-4 px-6 pt-6">
           <h2
             id="add-appointment-modal-title"
             className="text-2xl font-semibold text-primary"
@@ -148,125 +148,132 @@ export const AddAppointmentModal = () => {
             &times;
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row mt-2">
-            <div className="col-12">
-              <Input
-                LabelText="Appointment Title"
-                required
-                {...register("title", {
-                  required: "Appointment title is required.",
-                  validate: (title) =>
-                    title.trim().length >= 2 ||
-                    "Appointment title is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.title?.message ?? ""}
-              </p>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12 md:col-6">
-              <Input
-                LabelText="Date"
-                required
-                type="date"
-                {...register("date", {
-                  required: "Date is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.date?.message ?? ""}
-              </p>
-            </div>
-            <div className="col-12 md:col-6">
-              <Input
-                LabelText="Start Time"
-                required
-                type="time"
-                {...register("startTime", {
-                  required: "Start time is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.startTime?.message ?? ""}
-              </p>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12">
-              <Select
-                options={appointmentTypes}
-                LabelText="Appointment Type"
-                placeholder="Select appointment type"
-                required
-                {...register("appointmentType", {
-                  required: "Appointment type is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.appointmentType?.message ?? ""}
-              </p>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12">
-              <Select
-                options={providerOptions}
-                LabelText="Which Provider or Clinic?"
-                placeholder="Select a provider or clinic"
-                required
-                {...register("providerId", {
-                  required: "Provider or clinic is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.providerId?.message ?? ""}
-              </p>
-            </div>
-          </div>
-          {selectedProviderId === otherDoctorValue && (
+        <form
+          className="flex min-h-0 flex-1 flex-col"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 pt-2">
             <div className="row mt-2">
               <div className="col-12">
                 <Input
-                  LabelText="Provider or Clinic Name"
+                  LabelText="Appointment Title"
                   required
-                  {...register("doctorName", {
-                    validate: (doctorName) =>
-                      selectedProviderId !== otherDoctorValue ||
-                      doctorName.trim().length >= 2 ||
-                      "Provider or clinic name is required.",
+                  {...register("title", {
+                    required: "Appointment title is required.",
+                    validate: (title) =>
+                      title.trim().length >= 2 ||
+                      "Appointment title is required.",
                   })}
                 />
                 <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                  {errors.doctorName?.message ?? ""}
+                  {errors.title?.message ?? ""}
                 </p>
               </div>
             </div>
-          )}
-          <div className="row mt-2">
-            <div className="col-12 flex justify-end">
-              <Button
-                varient="primary"
-                type="submit"
-                buttonText={
-                  isLoading ? "Adding Appointment..." : "Add Appointment"
-                }
-                disabled={!isValid || isLoading}
-              />
+            <div className="row mt-2">
+              <div className="col-12 md:col-6">
+                <Input
+                  LabelText="Date"
+                  required
+                  type="date"
+                  {...register("date", {
+                    required: "Date is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.date?.message ?? ""}
+                </p>
+              </div>
+              <div className="col-12 md:col-6">
+                <Input
+                  LabelText="Start Time"
+                  required
+                  type="time"
+                  {...register("startTime", {
+                    required: "Start time is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.startTime?.message ?? ""}
+                </p>
+              </div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-12">
+                <Select
+                  options={appointmentTypes}
+                  LabelText="Appointment Type"
+                  placeholder="Select appointment type"
+                  required
+                  {...register("appointmentType", {
+                    required: "Appointment type is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.appointmentType?.message ?? ""}
+                </p>
+              </div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-12">
+                <Select
+                  options={providerOptions}
+                  LabelText="Which Provider or Clinic?"
+                  placeholder="Select a provider or clinic"
+                  required
+                  {...register("providerId", {
+                    required: "Provider or clinic is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.providerId?.message ?? ""}
+                </p>
+              </div>
+            </div>
+            {selectedProviderId === otherDoctorValue && (
+              <div className="row mt-2">
+                <div className="col-12">
+                  <Input
+                    LabelText="Provider or Clinic Name"
+                    required
+                    {...register("doctorName", {
+                      validate: (doctorName) =>
+                        selectedProviderId !== otherDoctorValue ||
+                        doctorName.trim().length >= 2 ||
+                        "Provider or clinic name is required.",
+                    })}
+                  />
+                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                    {errors.doctorName?.message ?? ""}
+                  </p>
+                </div>
+              </div>
+            )}
+            {formError && (
+              <p className="mt-4 text-sm font-semibold text-red-400">
+                {formError}
+              </p>
+            )}
+            {providersError && (
+              <p className="mt-4 text-sm font-semibold text-red-400">
+                {providersError}
+              </p>
+            )}
+          </div>
+          <div className="border-t border-slate-100 px-6 py-4">
+            <div className="row mt-0">
+              <div className="col-12 flex justify-end">
+                <Button
+                  varient="primary"
+                  type="submit"
+                  buttonText={
+                    isLoading ? "Adding Appointment..." : "Add Appointment"
+                  }
+                  disabled={!isValid || isLoading}
+                />
+              </div>
             </div>
           </div>
-          {formError && (
-            <p className="mt-4 text-sm font-semibold text-red-400">
-              {formError}
-            </p>
-          )}
-          {providersError && (
-            <p className="mt-4 text-sm font-semibold text-red-400">
-              {providersError}
-            </p>
-          )}
         </form>
       </section>
     </div>
