@@ -269,14 +269,11 @@ export default function Home() {
 
       <footer className="border-t border-slate-200 py-8">
         <div className="container flex flex-wrap items-center justify-between gap-4 text-sm text-slate-500">
-          <p>(c) 2026 MyDocDay. Your healthcare, organized.</p>
+          <p>&copy; 2026 MyDocDay. Your healthcare, organized.</p>
           <div className="flex gap-6">
             <Link className="hover:text-slate-950" href="/privacy">
               Privacy Statement
             </Link>
-            <a className="hover:text-slate-950" href="#">
-              Terms
-            </a>
           </div>
         </div>
       </footer>
