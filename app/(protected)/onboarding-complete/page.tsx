@@ -47,8 +47,21 @@ export default async function OnboardingCompletePage() {
           this account and pick up from here.
         </p>
         <p className="mt-4 text-sm leading-6 text-body">
-          For now, keep an eye out for launch updates and continue using your
-          usual care channels for appointments, reminders, and medical guidance.
+          For now, follow{" "}
+          <a
+            className="font-semibold text-primary underline underline-offset-4 hover:text-primary-light"
+            href="https://www.linkedin.com/in/dillonarnold/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            MyDocDay&apos;s journey on LinkedIn
+          </a>{" "}
+          for launch updates, and continue using your usual care channels for
+          appointments, reminders, and medical guidance.
+        </p>
+        <p className="mt-4 text-sm leading-6 text-body">
+          If you want to create a different early access account on this
+          browser, you&apos;ll need to clear your browser cookies first.
         </p>
       </section>
     </main>
