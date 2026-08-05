@@ -1,3 +1,103 @@
+.hamburger-button {
+  display: none;
+  flex-direction: column;
+  gap: 0.27rem;
+  height: 2.75rem;
+  width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 8%);
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.hamburger-button:hover {
+  background: rgb(255 255 255 / 12%);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1023px) {
+  .hamburger-button {
+    display: inline-flex;
+  }
+}
+
+.hamburger-button span {
+  display: block;
+  height: 2px;
+  width: 1.15rem;
+  border-radius: 999px;
+  background: white;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.hamburger-button[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(0.47rem) rotate(45deg);
+}
+
+.hamburger-button[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-button[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-0.47rem) rotate(-45deg);
+}
+
+.mobile-landing-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  max-height: 0;
+  overflow: hidden;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  background: rgb(31 53 87 / 98%);
+  opacity: 0;
+  transition:
+    max-height 220ms ease,
+    opacity 180ms ease;
+}
+
+.mobile-landing-menu.is-open {
+  max-height: calc(100dvh - 5rem);
+  opacity: 1;
+}
+
+.mobile-landing-link {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  color: rgb(255 255 255 / 88%);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.mobile-landing-link:hover {
+  color: white;
+}
+
+.mobile-menu-actions a,
+.mobile-menu-actions .button-primary,
+.mobile-menu-actions .button-secondary {
+  display: flex;
+  width: 100%;
+}
+
+.mobile-menu-actions .button-secondary {
+  margin-top: 1rem;
+  border-color: rgb(255 255 255 / 18%);
+  color: white;
+}
+
+.mobile-menu-actions .button-secondary:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
 .hero-surface {
   background:
     linear-gradient(90deg, rgb(31 53 87 / 98%), rgb(31 53 87 / 88%)),

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "@/app/components/common/button";
 import { useModal } from "@/app/store/modalContext";
 import Link from "next/link";
+import { useState } from "react";
 import "@/app/styles/landingPage.css";
 
 const features = [
@@ -45,34 +46,115 @@ const features = [
   },
 ];
 
+const navItems = [
+  { label: "Features", href: "#features" },
+  { label: "Get Started", href: "#get-started" },
+];
+
 export default function Home() {
   const { openSignInModal } = useModal();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <main className="overflow-hidden bg-[#f4f7fa] text-slate-950">
       <nav className="absolute inset-x-0 top-0 z-20 border-b border-white/10 bg-primary/95 backdrop-blur-xl">
-        <div className="container flex min-h-20 items-center justify-between gap-6">
+        <div className="container flex min-h-20 items-center justify-between gap-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
           <a
             className="flex items-center gap-3"
             href="#top"
             aria-label="MyDocDay home"
+            onClick={closeMobileMenu}
           >
             <span className="text-lg font-bold tracking-tight text-white">
               MyDocDay
             </span>
           </a>
 
-          <div className="flex items-center gap-6">
+          <div className="hidden items-center justify-center gap-8 lg:flex">
+            {navItems.map((item) => (
+              <a
+                className="text-sm font-semibold text-white/80 hover:text-white"
+                href={item.href}
+                key={item.href}
+              >
+                {item.label}
+              </a>
+            ))}
             <Link
               className="text-sm font-semibold text-white/80 hover:text-white"
               href="/privacy"
             >
               Privacy Statement
             </Link>
+          </div>
+
+          <div className="hidden items-center justify-end gap-4 lg:flex">
             <Button buttonText="Sign in" onClick={openSignInModal} />
             <Link href="/onboarding/">
               <Button buttonText="Early access" varient="primary" />
             </Link>
+          </div>
+
+          <button
+            aria-controls="mobile-landing-menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            className="hamburger-button lg:hidden"
+            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+            type="button"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+
+        <div
+          className={`mobile-landing-menu lg:hidden ${
+            isMobileMenuOpen ? "is-open" : ""
+          }`}
+          id="mobile-landing-menu"
+        >
+          <div className="container flex min-h-[calc(100dvh-5rem)] flex-col py-6">
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => (
+                <a
+                  className="mobile-landing-link"
+                  href={item.href}
+                  key={item.href}
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <Link
+                className="mobile-landing-link"
+                href="/privacy"
+                onClick={closeMobileMenu}
+              >
+                Privacy Statement
+              </Link>
+            </div>
+
+            <div className="mobile-menu-actions mt-auto border-t border-white/10 pt-6">
+              <Link href="/onboarding/" onClick={closeMobileMenu}>
+                <Button
+                  buttonText="Create Early Access Account"
+                  varient="primary"
+                />
+              </Link>
+              <Button
+                buttonText="Sign in"
+                className="mt-4"
+                onClick={() => {
+                  openSignInModal();
+                  closeMobileMenu();
+                }}
+                varient="secondary"
+              />
+            </div>
           </div>
         </div>
       </nav>
