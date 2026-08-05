@@ -9,19 +9,41 @@ type DeletedProviderRow = {
 export async function deleteProvider(
   input: DeleteProviderInput,
 ): Promise<void> {
-  const result = await db.query<DeletedProviderRow>(
-    `
-      DELETE FROM providers
-      WHERE id = $1
-        AND user_id = $2
-      RETURNING id
-    `,
-    [input.providerId, input.userId],
-  );
+  const client = await db.connect();
 
-  const row = result.rows[0];
+  try {
+    await client.query("BEGIN");
 
-  if (!row) {
-    throw new AppError("Provider not found.", 404, "PROVIDER_NOT_FOUND");
+    await client.query(
+      `
+        DELETE FROM appointments
+        WHERE provider_id = $1
+          AND user_id = $2
+      `,
+      [input.providerId, input.userId],
+    );
+
+    const result = await client.query<DeletedProviderRow>(
+      `
+        DELETE FROM providers
+        WHERE id = $1
+          AND user_id = $2
+        RETURNING id
+      `,
+      [input.providerId, input.userId],
+    );
+
+    const row = result.rows[0];
+
+    if (!row) {
+      throw new AppError("Provider not found.", 404, "PROVIDER_NOT_FOUND");
+    }
+
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
   }
 }

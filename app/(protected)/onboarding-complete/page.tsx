@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { db } from "@/backend/lib/db";
 import { requireSession } from "@/backend/services/auth/require-session";
 
@@ -59,10 +60,14 @@ export default async function OnboardingCompletePage() {
           for launch updates, and continue using your usual care channels for
           appointments, reminders, and medical guidance.
         </p>
-        <p className="mt-4 text-sm leading-6 text-body">
-          If you want to create a different early access account on this
-          browser, you&apos;ll need to clear your browser cookies first.
-        </p>
+        <div className="mt-8">
+          <Link
+            className="button-primary inline-flex text-sm font-bold text-primary hover:bg-white"
+            href="/onboarding/providers"
+          >
+            Update Care Profile
+          </Link>
+        </div>
       </section>
     </main>
   );

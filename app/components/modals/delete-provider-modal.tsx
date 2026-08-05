@@ -65,7 +65,8 @@ export const DeleteProviderModal = () => {
               Delete Provider
             </h2>
             <p className="mt-3 text-sm text-body">
-              Are you sure you want to delete this doctor? This cannot be
+              Are you sure you want to delete this doctor? Any appointments
+              attached to this doctor will also be deleted. This cannot be
               undone.
             </p>
           </div>
