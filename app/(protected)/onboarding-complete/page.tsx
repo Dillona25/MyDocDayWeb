@@ -68,6 +68,14 @@ export default async function OnboardingCompletePage() {
             Update Care Profile
           </Link>
         </div>
+        <div className="mt-5">
+          <Link
+            className="text-sm font-semibold text-primary hover:underline"
+            href="/"
+          >
+            Back to MyDocDay
+          </Link>
+        </div>
       </section>
     </main>
   );
