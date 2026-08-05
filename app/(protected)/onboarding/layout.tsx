@@ -4,6 +4,7 @@ import { OnboardingProvider } from "@/app/store/onboardingStepsContext";
 import "@/app/styles/onboardingProgress.css";
 import { db } from "@/backend/lib/db";
 import { requireSession } from "@/backend/services/auth/require-session";
+import { redirect } from "next/navigation";
 
 type OnboardingRow = {
   current_step: number;
@@ -30,6 +31,10 @@ export default async function OnboardingLayout({
     [session.userId],
   );
   const onboarding = onboardingResult.rows[0];
+
+  if (onboarding?.is_complete) {
+    redirect("/onboarding-complete");
+  }
 
   return (
     <OnboardingProvider

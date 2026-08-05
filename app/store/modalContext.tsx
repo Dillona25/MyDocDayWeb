@@ -7,16 +7,20 @@ import type { ReturnedAppointment } from "@/backend/services/appointments/appoin
 type ProviderCreatedHandler = (provider: ReturnedProvider) => void;
 type ProviderDeletedHandler = (providerId: number) => void;
 type AppointmentCreatedHandler = (appointment: ReturnedAppointment) => void;
+type AppointmentDeletedHandler = (appointmentId: number) => void;
 
 interface ModalContextType {
   isSignInModalOpen: boolean;
   isAddProviderModalOpen: boolean;
   isAddAppointmentModalOpen: boolean;
   isDeleteProviderModalOpen: boolean;
+  isDeleteAppointmentModalOpen: boolean;
   onProviderCreated?: ProviderCreatedHandler;
   onAppointmentCreated?: AppointmentCreatedHandler;
   providerToDelete?: ReturnedProvider;
+  appointmentToDelete?: ReturnedAppointment;
   onProviderDeleted?: ProviderDeletedHandler;
+  onAppointmentDeleted?: AppointmentDeletedHandler;
   openSignInModal: () => void;
   closeSignInModal: () => void;
   openAddProviderModal: (onProviderCreated?: ProviderCreatedHandler) => void;
@@ -30,6 +34,11 @@ interface ModalContextType {
     onProviderDeleted?: ProviderDeletedHandler,
   ) => void;
   closeDeleteProviderModal: () => void;
+  openDeleteAppointmentModal: (
+    appointment: ReturnedAppointment,
+    onAppointmentDeleted?: AppointmentDeletedHandler,
+  ) => void;
+  closeDeleteAppointmentModal: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -41,13 +50,19 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     useState(false);
   const [isDeleteProviderModalOpen, setIsDeleteProviderModalOpen] =
     useState(false);
+  const [isDeleteAppointmentModalOpen, setIsDeleteAppointmentModalOpen] =
+    useState(false);
   const [onProviderCreated, setOnProviderCreated] =
     useState<ProviderCreatedHandler>();
   const [onAppointmentCreated, setOnAppointmentCreated] =
     useState<AppointmentCreatedHandler>();
   const [providerToDelete, setProviderToDelete] = useState<ReturnedProvider>();
+  const [appointmentToDelete, setAppointmentToDelete] =
+    useState<ReturnedAppointment>();
   const [onProviderDeleted, setOnProviderDeleted] =
     useState<ProviderDeletedHandler>();
+  const [onAppointmentDeleted, setOnAppointmentDeleted] =
+    useState<AppointmentDeletedHandler>();
 
   const openSignInModal = () => setIsSignInModalOpen(true);
   const closeSignInModal = () => setIsSignInModalOpen(false);
@@ -80,6 +95,19 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setProviderToDelete(undefined);
     setOnProviderDeleted(undefined);
   };
+  const openDeleteAppointmentModal = (
+    appointment: ReturnedAppointment,
+    handler?: AppointmentDeletedHandler,
+  ) => {
+    setAppointmentToDelete(appointment);
+    setOnAppointmentDeleted(() => handler);
+    setIsDeleteAppointmentModalOpen(true);
+  };
+  const closeDeleteAppointmentModal = () => {
+    setIsDeleteAppointmentModalOpen(false);
+    setAppointmentToDelete(undefined);
+    setOnAppointmentDeleted(undefined);
+  };
 
   return (
     <ModalContext.Provider
@@ -88,10 +116,13 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         isAddProviderModalOpen,
         isAddAppointmentModalOpen,
         isDeleteProviderModalOpen,
+        isDeleteAppointmentModalOpen,
         onProviderCreated,
         onAppointmentCreated,
         providerToDelete,
+        appointmentToDelete,
         onProviderDeleted,
+        onAppointmentDeleted,
         openSignInModal,
         closeSignInModal,
         openAddProviderModal,
@@ -100,6 +131,8 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         closeAddAppointmentModal,
         openDeleteProviderModal,
         closeDeleteProviderModal,
+        openDeleteAppointmentModal,
+        closeDeleteAppointmentModal,
       }}
     >
       {children}

@@ -41,9 +41,10 @@ export async function createAppointment(
           title,
           appointment_date,
           start_time,
+          appointment_type,
           doctor_name
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING
           id,
           user_id,
@@ -51,6 +52,7 @@ export async function createAppointment(
           title,
           appointment_date,
           start_time,
+          appointment_type,
           doctor_name,
           created_at,
           updated_at
@@ -62,6 +64,7 @@ export async function createAppointment(
         inserted_appointment.title,
         inserted_appointment.appointment_date,
         inserted_appointment.start_time,
+        inserted_appointment.appointment_type,
         COALESCE(
           inserted_appointment.doctor_name,
           CONCAT('Dr. ', providers.first_name, ' ', providers.last_name)
@@ -78,6 +81,7 @@ export async function createAppointment(
       input.title,
       input.date,
       input.startTime,
+      input.appointmentType,
       input.doctorName,
     ],
   );

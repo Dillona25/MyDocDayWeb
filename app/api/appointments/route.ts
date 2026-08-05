@@ -5,7 +5,11 @@ import { db } from "@/backend/lib/db";
 import { SESSION_COOKIE_NAME } from "@/backend/services/auth/session-cookie";
 import { getAppointments } from "@/backend/services/appointments/get/get-appointments";
 import { createAppointment } from "@/backend/services/appointments/post/create-appointment";
-import { createAppointmentSchema } from "@/backend/services/appointments/appointment-schema";
+import { deleteAppointment } from "@/backend/services/appointments/delete/delete-appointment";
+import {
+  createAppointmentSchema,
+  deleteAppointmentSchema,
+} from "@/backend/services/appointments/appointment-schema";
 
 export const runtime = "nodejs";
 
@@ -88,5 +92,38 @@ export async function POST(request: Request): Promise<Response> {
     );
   } catch (error) {
     return handleApiError(error, "POST /api/appointments");
+  }
+}
+
+export async function DELETE(request: Request): Promise<Response> {
+  try {
+    const body: unknown = await request.json();
+    const validationResult = deleteAppointmentSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return Response.json(
+        {
+          message: "Invalid appointment information.",
+          errors: validationResult.error.flatten().fieldErrors,
+        },
+        { status: 400 },
+      );
+    }
+
+    const userId = await getSessionUserId();
+
+    await deleteAppointment({
+      userId,
+      appointmentId: validationResult.data.appointmentId,
+    });
+
+    return Response.json(
+      {
+        message: "Appointment deleted successfully.",
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    return handleApiError(error, "DELETE /api/appointments");
   }
 }

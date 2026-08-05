@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AddAppointmentModal } from "./components/modals/add-appointment-modal";
 import { AddProviderModal } from "./components/modals/add-provider-modal";
+import { DeleteAppointmentModal } from "./components/modals/delete-appointment-modal";
 import { DeleteProviderModal } from "./components/modals/delete-provider-modal";
 import { SignInModal } from "./components/modals/sign-in-modal";
 import { ModalProvider } from "./store/modalContext";
@@ -40,6 +41,7 @@ export default function RootLayout({
           <AddProviderModal />
           <AddAppointmentModal />
           <DeleteProviderModal />
+          <DeleteAppointmentModal />
         </ModalProvider>
       </body>
     </html>

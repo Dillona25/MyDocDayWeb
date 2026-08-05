@@ -21,6 +21,8 @@ export const createAppointmentSchema = z
       .trim()
       .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Enter a valid start time."),
 
+    appointmentType: z.enum(["in_person", "telehealth"]),
+
     providerId: z.number().int().positive("Doctor is required.").optional(),
 
     doctorName: z
@@ -43,3 +45,7 @@ export const createAppointmentSchema = z
 export type CreateAppointmentSchemaInput = z.infer<
   typeof createAppointmentSchema
 >;
+
+export const deleteAppointmentSchema = z.object({
+  appointmentId: z.number().int().positive("Appointment id is required."),
+});

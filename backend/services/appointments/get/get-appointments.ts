@@ -14,6 +14,7 @@ export async function getAppointments(
         appointments.title,
         appointments.appointment_date,
         appointments.start_time,
+        appointments.appointment_type,
         COALESCE(
           appointments.doctor_name,
           CONCAT('Dr. ', providers.first_name, ' ', providers.last_name)

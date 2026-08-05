@@ -21,7 +21,7 @@ function sortAppointmentsByDateTime(
 
 export default function AppointmentsOnboardingPage() {
   const { handleNextStep, handlePreviousStep } = useOnboardingNavigation();
-  const { openAddAppointmentModal } = useModal();
+  const { openAddAppointmentModal, openDeleteAppointmentModal } = useModal();
   const [appointments, setAppointments] = useState<ReturnedAppointment[]>([]);
   const [appointmentsError, setAppointmentsError] = useState("");
 
@@ -84,7 +84,19 @@ export default function AppointmentsOnboardingPage() {
                       title={appointment.title}
                       date={appointment.date}
                       startTime={appointment.startTime}
+                      appointmentType={appointment.appointmentType}
                       doctorName={appointment.doctorName}
+                      onDelete={() =>
+                        openDeleteAppointmentModal(
+                          appointment,
+                          (appointmentId) =>
+                            setAppointments((current) =>
+                              current.filter(
+                                (item) => item.id !== appointmentId,
+                              ),
+                            ),
+                        )
+                      }
                     />
                   </div>
                 ))}
@@ -112,8 +124,8 @@ export default function AppointmentsOnboardingPage() {
           />
           <Button
             varient="primary"
-            buttonText="Next Step"
-            onClick={() => handleNextStep("/")}
+            buttonText="Finish"
+            onClick={() => handleNextStep("/onboarding-complete")}
           />
         </div>
       </div>

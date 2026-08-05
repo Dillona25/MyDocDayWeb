@@ -2,6 +2,7 @@
 
 import { getProviders } from "@/app/api/providers/get/request";
 import { createAppointment } from "@/app/api/appointments/post/request";
+import { appointmentTypes } from "@/app/data/appointmentTypes";
 import { useModal } from "@/app/store/modalContext";
 import type { ReturnedProvider } from "@/backend/services/providers/provider-types";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ type AppointmentFormData = {
   title: string;
   date: string;
   startTime: string;
+  appointmentType: "in_person" | "telehealth" | "";
   providerId: string;
   doctorName: string;
 };
@@ -24,6 +26,7 @@ const initialAppointmentFormData: AppointmentFormData = {
   title: "",
   date: "",
   startTime: "",
+  appointmentType: "",
   providerId: "",
   doctorName: "",
 };
@@ -93,6 +96,7 @@ export const AddAppointmentModal = () => {
         title: formData.title,
         date: formData.date,
         startTime: formData.startTime,
+        appointmentType: formData.appointmentType || "in_person",
         providerId:
           formData.providerId === otherDoctorValue
             ? undefined
@@ -186,6 +190,22 @@ export const AddAppointmentModal = () => {
               />
               <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
                 {errors.startTime?.message ?? ""}
+              </p>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-12">
+              <Select
+                options={appointmentTypes}
+                LabelText="Appointment Type"
+                placeholder="Select appointment type"
+                required
+                {...register("appointmentType", {
+                  required: "Appointment type is required.",
+                })}
+              />
+              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                {errors.appointmentType?.message ?? ""}
               </p>
             </div>
           </div>

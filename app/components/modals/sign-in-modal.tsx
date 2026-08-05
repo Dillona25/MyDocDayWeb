@@ -46,7 +46,7 @@ export const SignInModal = () => {
       const user = data.user;
 
       if (user.onboarding.isComplete) {
-        router.push("/dashboard");
+        router.push("/onboarding-complete");
       } else {
         router.push(onboardingStepRoutes[user.onboarding.currentStep]);
       }
