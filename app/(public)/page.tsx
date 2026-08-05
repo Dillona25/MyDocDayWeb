@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/app/components/common/button";
+import { EarlyAccessBanner } from "@/app/components/common/early-access-banner";
 import { useModal } from "@/app/store/modalContext";
 import Link from "next/link";
 import { useState } from "react";
@@ -93,7 +94,7 @@ export default function Home() {
           <div className="hidden items-center justify-end gap-4 lg:flex">
             <Button buttonText="Sign in" onClick={openSignInModal} />
             <Link href="/onboarding/">
-              <Button buttonText="Early access" varient="primary" />
+              <Button buttonText="Create Account" varient="primary" />
             </Link>
           </div>
 
@@ -140,10 +141,7 @@ export default function Home() {
 
             <div className="mobile-menu-actions mt-auto border-t border-white/10 pt-6">
               <Link href="/onboarding/" onClick={closeMobileMenu}>
-                <Button
-                  buttonText="Create Early Access Account"
-                  varient="primary"
-                />
+                <Button buttonText="Create Account" varient="primary" />
               </Link>
               <Button
                 buttonText="Sign in"
@@ -163,6 +161,7 @@ export default function Home() {
         className="hero-surface relative overflow-hidden pb-[22rem] pt-36 text-white sm:pb-[25rem] lg:overflow-visible lg:pb-28 lg:pt-44"
         id="top"
       >
+        <EarlyAccessBanner />
         <div className="container hero-content-shell relative z-10">
           <div className="row items-center [--gutter-y:3.5rem] lg:[--gutter-x:4rem]">
             <div className="col-12 lg:col-6">
@@ -181,10 +180,7 @@ export default function Home() {
                 </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Link href="/onboarding/">
-                    <Button
-                      varient="primary"
-                      buttonText="Create Early Access Account"
-                    />
+                    <Button varient="primary" buttonText="Create Account" />
                   </Link>
                   <a href="#features" className="button-secondary">
                     See Launch Features
@@ -252,13 +248,13 @@ export default function Home() {
                   Early access is open
                 </span>
                 <h2 className="mt-6 max-w-3xl text-4xl font-bold tracking-[-0.025em] text-white sm:text-5xl">
-                  Create Early Access Account Now!
+                  Create your MyDocDay account now!
                 </h2>
               </div>
               <div className="col-12 lg:col-4">
                 <div className="flex lg:justify-end">
                   <Link href="/onboarding/">
-                    <Button varient="primary" buttonText="Start Setup" />
+                    <Button varient="primary" buttonText="Create Account" />
                   </Link>
                 </div>
               </div>

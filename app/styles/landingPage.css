@@ -98,6 +98,31 @@
   background: rgb(255 255 255 / 10%);
 }
 
+.early-access-banner {
+  position: absolute;
+  inset-inline: 0;
+  top: 5rem;
+  z-index: 10;
+  border-block: 1px solid rgb(28 184 178 / 26%);
+  background: rgb(223 244 243 / 96%);
+  color: #1f3557;
+  padding-block: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: 0 10px 30px rgb(16 38 65 / 10%);
+}
+
+.early-access-banner a {
+  color: #0b6763;
+  text-decoration: underline;
+  text-underline-offset: 0.22rem;
+}
+
+.early-access-banner a:hover {
+  color: #102641;
+}
+
 .hero-surface {
   background:
     linear-gradient(90deg, rgb(31 53 87 / 98%), rgb(31 53 87 / 88%)),
@@ -107,6 +132,12 @@
       transparent 32rem
     ),
     #1f3557;
+}
+
+@media (max-width: 1023px) {
+  .hero-surface {
+    padding-top: 12rem;
+  }
 }
 
 .hero-surface::after {
