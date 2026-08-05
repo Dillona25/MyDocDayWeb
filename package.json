@@ -11,6 +11,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "bcrypt": "^6.0.0",
     "next": "16.2.10",
     "pg": "^8.22.0",

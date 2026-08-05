@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { AddAppointmentModal } from "./components/modals/add-appointment-modal";
 import { AddProviderModal } from "./components/modals/add-provider-modal";
 import { DeleteAppointmentModal } from "./components/modals/delete-appointment-modal";
@@ -43,6 +44,7 @@ export default function RootLayout({
           <DeleteProviderModal />
           <DeleteAppointmentModal />
         </ModalProvider>
+        <Analytics />
       </body>
     </html>
   );
