@@ -22,7 +22,14 @@ Each migration represents **one schema change** and should be added in chronolog
 
 ## Current Workflow
 
-For now, migrations are executed manually using TablePlus.
+For now, migrations are executed manually using TablePlus locally and the Neon
+SQL editor for deployed databases.
+
+Run each migration **once**, in numerical order, for each database environment.
+Do not rerun old migrations every time the app changes.
+
+When a new migration is added, remember to run it against the Neon database
+used by Vercel before testing the deployed feature.
 
 ## Purpose
 
