@@ -20,6 +20,7 @@ export async function getAppointments(
           providers.clinic_name,
           CONCAT('Dr. ', providers.first_name, ' ', providers.last_name)
         ) AS doctor_name,
+        providers.type AS provider_type,
         appointments.created_at,
         appointments.updated_at
       FROM appointments

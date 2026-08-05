@@ -4,6 +4,7 @@ interface AppointmentWidgetProps {
   startTime: string;
   appointmentType: "in_person" | "telehealth";
   doctorName?: string | null;
+  providerType?: "provider" | "clinic" | null;
   onDelete?: () => void;
 }
 
@@ -61,10 +62,12 @@ export const AppointmentWidget = ({
   startTime,
   appointmentType,
   doctorName,
+  providerType,
   onDelete,
 }: AppointmentWidgetProps) => {
   const appointmentTypeLabel =
     appointmentType === "telehealth" ? "Telehealth" : "In Person";
+  const providerLabel = providerType === "clinic" ? "Clinic" : "Provider";
 
   return (
     <article className="h-full rounded-lg border border-primary/40 bg-slate-50 p-5 shadow-[0_12px_28px_rgb(31_53_87/10%)]">
@@ -114,7 +117,7 @@ export const AppointmentWidget = ({
       {doctorName && (
         <div className="mt-4 border-t border-slate-100 pt-4">
           <p className="text-xs font-semibold uppercase text-slate-400">
-            Doctor
+            {providerLabel}
           </p>
           <p className="mt-1 truncate text-sm text-body">{doctorName}</p>
         </div>

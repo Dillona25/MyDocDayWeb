@@ -15,6 +15,7 @@ export function mapAppointmentRow(row: AppointmentRow): ReturnedAppointment {
     startTime: row.start_time,
     appointmentType: row.appointment_type,
     doctorName: row.doctor_name,
+    providerType: row.provider_type,
     createdAt: row.created_at.toISOString(),
     updatedAt: row.updated_at.toISOString(),
   };

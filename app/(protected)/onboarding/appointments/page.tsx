@@ -86,6 +86,7 @@ export default function AppointmentsOnboardingPage() {
                       startTime={appointment.startTime}
                       appointmentType={appointment.appointmentType}
                       doctorName={appointment.doctorName}
+                      providerType={appointment.providerType}
                       onDelete={() =>
                         openDeleteAppointmentModal(
                           appointment,

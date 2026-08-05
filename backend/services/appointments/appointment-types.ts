@@ -1,3 +1,5 @@
+import type { ProviderType } from "../providers/provider-types";
+
 export type AppointmentType = "in_person" | "telehealth";
 
 export type CreateAppointmentInput = {
@@ -24,6 +26,7 @@ export type ReturnedAppointment = {
   startTime: string;
   appointmentType: AppointmentType;
   doctorName: string | null;
+  providerType: ProviderType | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -37,6 +40,7 @@ export type AppointmentRow = {
   start_time: string;
   appointment_type: AppointmentType;
   doctor_name: string | null;
+  provider_type: ProviderType | null;
   created_at: Date;
   updated_at: Date;
 };

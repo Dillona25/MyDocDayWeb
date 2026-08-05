@@ -54,6 +54,7 @@ export async function createAppointment(
           start_time,
           appointment_type,
           doctor_name,
+          NULL::VARCHAR(20) AS provider_type,
           created_at,
           updated_at
       )
@@ -70,6 +71,7 @@ export async function createAppointment(
           providers.clinic_name,
           CONCAT('Dr. ', providers.first_name, ' ', providers.last_name)
         ) AS doctor_name,
+        providers.type AS provider_type,
         inserted_appointment.created_at,
         inserted_appointment.updated_at
       FROM inserted_appointment
