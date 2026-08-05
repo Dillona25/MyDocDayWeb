@@ -26,15 +26,17 @@ export function mapDatabaseError(error: unknown): AppError | null {
     );
   }
 
-  // Example for later:
-  // if (error.code === "23503" && error.constraint === "appointments_provider_id_fkey") {
-  //   return new AppError(
-  //     "Selected provider does not exist.",
-  //     400,
-  //     "PROVIDER_NOT_FOUND",
-  //     "providerId",
-  //   );
-  // }
+  if (
+    error.code === "23503" &&
+    error.constraint === "appointments_provider_id_fkey"
+  ) {
+    return new AppError(
+      "Selected doctor does not exist.",
+      400,
+      "PROVIDER_NOT_FOUND",
+      "providerId",
+    );
+  }
 
   return null;
 }
