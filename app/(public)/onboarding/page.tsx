@@ -58,7 +58,7 @@ export default function SignupOnboardingPage() {
   }
 
   return (
-    <div className="container">
+    <div className="container mb-9">
       <div className="row my-10">
         <div className="col-12 mx-auto md:col-8">
           <h1 className="text-[30px] font-semibold text-primary">
