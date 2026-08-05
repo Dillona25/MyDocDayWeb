@@ -31,6 +31,58 @@
   background: rgb(255 255 255 / 12%);
 }
 
+.hero-content-shell {
+  position: static;
+}
+
+.hero-phone-stage {
+  bottom: -11rem;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(20rem, 72vw);
+  z-index: 0;
+}
+
+.hero-phone-image {
+  margin-inline: auto;
+  max-width: 100%;
+}
+
+@media (min-width: 420px) and (max-width: 1023px) {
+  .hero-surface {
+    padding-bottom: 30rem;
+  }
+
+  .hero-phone-stage {
+    bottom: -10rem;
+    width: min(22rem, 68vw);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-content-shell {
+    position: relative;
+  }
+
+  .hero-phone-stage {
+    bottom: auto;
+    display: flex;
+    justify-content: center;
+    left: auto;
+    position: relative;
+    transform: none;
+    width: 50%;
+    z-index: auto;
+  }
+
+  .hero-phone-image {
+    margin-inline: auto;
+    max-width: 22rem;
+    transform: none;
+  }
+}
+
 .cta-panel {
   background:
     linear-gradient(90deg, rgb(31 53 87 / 96%), rgb(31 53 87 / 84%)),

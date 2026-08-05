@@ -36,13 +36,19 @@ export default async function OnboardingCompletePage() {
     <main className="container flex min-h-screen items-center justify-center py-12">
       <section className="mx-auto max-w-xl text-center">
         <p className="text-sm font-semibold uppercase text-secondary">
-          Account Ready
+          Early Access Account Ready
         </p>
         <h1 className="mt-3 text-4xl font-semibold text-primary">
-          You&apos;re all set
+          You&apos;re on the list
         </h1>
         <p className="mt-4 text-base leading-7 text-body">
-          Go back to the MyDocDay app and refresh to access your account.
+          Your MyDocDay account and care profile are ready. The mobile app is
+          coming soon, and when it launches you&apos;ll be able to sign in with
+          this account and pick up from here.
+        </p>
+        <p className="mt-4 text-sm leading-6 text-body">
+          For now, keep an eye out for launch updates and continue using your
+          usual care channels for appointments, reminders, and medical guidance.
         </p>
       </section>
     </main>

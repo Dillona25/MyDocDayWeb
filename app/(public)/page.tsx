@@ -9,21 +9,39 @@ import "@/app/styles/landingPage.css";
 const features = [
   {
     number: "01",
-    title: "Appointments at a glance",
+    title: "Appointments in one timeline",
     description:
-      "Add upcoming visits, keep the important details nearby, and see your healthcare schedule in one simple timeline.",
+      "Keep upcoming visits, dates, times, and provider details together instead of checking multiple portals.",
   },
   {
     number: "02",
-    title: "Your care team, organized",
+    title: "Every provider in one directory",
     description:
-      "Manage providers, specialists, offices, and contact information without searching through portals, emails, or paperwork.",
+      "Save doctors, specialists, clinics, phone numbers, locations, and specialties without digging through portals, texts, and paperwork.",
   },
   {
     number: "03",
-    title: "Reminders that keep you ready",
+    title: "Reminders that reduce the mental load",
     description:
-      "Remember follow-ups, prescription questions, forms, and the things you want to discuss at your next appointment.",
+      "Track follow-ups, annual visits, dental cleanings, prescription questions, and care tasks you do not want to forget.",
+  },
+  {
+    number: "04",
+    title: "Care rhythms based on your input",
+    description:
+      "Use the timing you enter to organize repeat care rhythms, while keeping medical decisions between you and your providers.",
+  },
+  {
+    number: "05",
+    title: "Notes before and after visits",
+    description:
+      "Capture questions before a visit and notes afterward, so the important details do not disappear between appointments.",
+  },
+  {
+    number: "06",
+    title: "Family care support",
+    description:
+      "Organize care details for yourself and the family members you help support, without mixing everything across portals.",
   },
 ];
 
@@ -45,59 +63,63 @@ export default function Home() {
           </a>
 
           <div className="flex items-center gap-6">
+            <Link
+              className="text-sm font-semibold text-white/80 hover:text-white"
+              href="/privacy"
+            >
+              Privacy Statement
+            </Link>
             <Button buttonText="Sign in" onClick={openSignInModal} />
             <Link href="/onboarding/">
-              <Button buttonText="Sign up" varient="primary" />
+              <Button buttonText="Early access" varient="primary" />
             </Link>
           </div>
         </div>
       </nav>
 
       <section
-        className="hero-surface relative pb-20 pt-36 text-white lg:pb-28 lg:pt-44"
+        className="hero-surface relative overflow-hidden pb-[22rem] pt-36 text-white sm:pb-[25rem] lg:overflow-visible lg:pb-28 lg:pt-44"
         id="top"
       >
-        <div className="container relative z-10">
+        <div className="container hero-content-shell relative z-10">
           <div className="row items-center [--gutter-y:3.5rem] lg:[--gutter-x:4rem]">
             <div className="col-12 lg:col-6">
               <div className="max-w-2xl">
                 <span className="inline-flex items-center border-l-[3px] border-secondary py-[0.15rem] pl-[0.7rem] text-[0.72rem] font-extrabold uppercase leading-none tracking-[0.16em] text-[#b9efed]">
-                  Organize. Plan. Stay ahead.
+                  Your healthcare in one place
                 </span>
                 <h1 className="mt-7 text-5xl font-bold leading-[1.04] tracking-[-0.035em] sm:text-6xl lg:text-6xl">
-                  Your healthcare, finally in one place.
+                  Stop bouncing between portals to manage your care.
                 </h1>
                 <p className="mt-7 max-w-xl text-lg leading-8 text-slate-300 sm:text-xl">
-                  MyDocDay is a simpler way to manage appointments, providers,
-                  reminders, and the health details you need to keep close.
+                  MyDocDay brings appointments, providers, reminders, and visit
+                  notes into one simple place, so your healthcare details are
+                  easier to find, track, and act on for yourself and the family
+                  members you support.
                 </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Link href="/onboarding/">
-                    <Button varient="primary" buttonText="Get Organized" />
+                    <Button
+                      varient="primary"
+                      buttonText="Create Early Access Account"
+                    />
                   </Link>
                   <a href="#features" className="button-secondary">
-                    Explore Features
+                    See Launch Features
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="col-12 lg:col-6">
-              <div className="rounded-xl border border-white/15 bg-white/[0.07] p-[0.8rem] shadow-[0_35px_80px_rgb(0_0_0/35%)] backdrop-blur-[18px] md:[transform:perspective(1200px)_rotateY(-1deg)]">
-                <div className="mb-3 flex items-center gap-1.5 px-1">
-                  <span className="size-2 rounded-full bg-secondary" />
-                  <span className="size-2 rounded-full bg-primary-light" />
-                  <span className="size-2 rounded-full bg-success" />
-                </div>
-                <Image
-                  priority
-                  className="h-auto w-full rounded-md"
-                  src="/images/dashboard-placeholder.svg"
-                  alt="Placeholder preview of the future MyDocDay healthcare dashboard"
-                  width={1200}
-                  height={820}
-                />
-              </div>
+            <div className="hero-phone-stage col-12 lg:col-6">
+              <Image
+                priority
+                className="hero-phone-image h-auto w-full drop-shadow-[0_34px_70px_rgb(0_0_0/34%)]"
+                src="/images/mydocday-phone-dashboard-cropped.png"
+                alt="Preview concept of the future MyDocDay mobile dashboard"
+                width={536}
+                height={1024}
+              />
             </div>
           </div>
         </div>
@@ -108,15 +130,11 @@ export default function Home() {
           <div className="row [--gutter-y:2rem] lg:[--gutter-x:3rem]">
             <div className="col-12 lg:col-5">
               <span className="inline-flex items-center border-l-[3px] border-secondary py-[0.15rem] pl-[0.7rem] text-[0.72rem] font-extrabold uppercase leading-none tracking-[0.16em] text-primary">
-                Your personal health hub
+                Launch features
               </span>
               <h2 className="mt-6 max-w-2xl text-[clamp(2.5rem,5vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.035em] text-slate-950">
-                Less portal hopping. More clarity.
+                Less portal hopping. More clarity around what comes next.
               </h2>
-              <p className="mt-6 max-w-lg text-lg leading-[1.8] text-slate-500">
-                The MVP brings the practical parts of managing your healthcare
-                into one focused, easy-to-use place.
-              </p>
             </div>
             <div className="col-12 lg:col-7">
               <div className="row [--gutter-y:1rem]">
@@ -149,17 +167,16 @@ export default function Home() {
             <div className="row items-center [--gutter-y:2rem]">
               <div className="col-12 lg:col-8">
                 <span className="inline-flex items-center border-l-[3px] border-secondary py-[0.15rem] pl-[0.7rem] text-[0.72rem] font-extrabold uppercase leading-none tracking-[0.16em] text-[#b9efed]">
-                  Your health, with more clarity
+                  Early access is open
                 </span>
                 <h2 className="mt-6 max-w-3xl text-4xl font-bold tracking-[-0.025em] text-white sm:text-5xl">
-                  Keep your healthcare details together and your next step
-                  clear.
+                  Create Early Access Account Now!
                 </h2>
               </div>
               <div className="col-12 lg:col-4">
                 <div className="flex lg:justify-end">
                   <Link href="/onboarding/">
-                    <Button varient="primary" buttonText="Create Account" />
+                    <Button varient="primary" buttonText="Start Setup" />
                   </Link>
                 </div>
               </div>
@@ -170,11 +187,11 @@ export default function Home() {
 
       <footer className="border-t border-slate-200 py-8">
         <div className="container flex flex-wrap items-center justify-between gap-4 text-sm text-slate-500">
-          <p>© 2026 MyDocDay. Your healthcare, organized.</p>
+          <p>(c) 2026 MyDocDay. Your healthcare, organized.</p>
           <div className="flex gap-6">
-            <a className="hover:text-slate-950" href="#">
-              Privacy
-            </a>
+            <Link className="hover:text-slate-950" href="/privacy">
+              Privacy Statement
+            </Link>
             <a className="hover:text-slate-950" href="#">
               Terms
             </a>

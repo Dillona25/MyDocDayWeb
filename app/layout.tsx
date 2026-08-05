@@ -8,9 +8,9 @@ import { ModalProvider } from "./store/modalContext";
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "MyDocDay — Your Healthcare, Organized",
+  title: "MyDocDay - Early Access Care Setup",
   description:
-    "Manage appointments, providers, reminders, and your healthcare information in one simple personal health hub.",
+    "Create an early access MyDocDay account and set up your care profile before the mobile app launches.",
 };
 
 export default function RootLayout({
