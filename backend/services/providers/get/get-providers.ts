@@ -10,6 +10,7 @@ export async function getProviders(userId: number): Promise<ReturnedProvider[]> 
         user_id,
         first_name,
         last_name,
+        clinic_name,
         specialty,
         type,
         phone_number,

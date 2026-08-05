@@ -14,9 +14,10 @@ import type { ProviderType } from "@/backend/services/providers/provider-types";
 type ProviderFormData = {
   firstName: string;
   lastName: string;
+  clinicName: string;
   specialty: string;
   phoneNumber: string;
-  type: ProviderType;
+  type: ProviderType | "";
   imageUrl: string;
   streetAddress: string;
   city: string;
@@ -27,9 +28,10 @@ type ProviderFormData = {
 const initialProviderFormData: ProviderFormData = {
   firstName: "",
   lastName: "",
+  clinicName: "",
   specialty: "",
   phoneNumber: "",
-  type: "provider",
+  type: "",
   imageUrl: "",
   streetAddress: "",
   city: "",
@@ -63,7 +65,13 @@ export const AddProviderModal = () => {
     setIsLoading(true);
 
     try {
-      const data = await createProvider(formData);
+      const data = await createProvider({
+        ...formData,
+        type: formData.type || "provider",
+        firstName: formData.type === "provider" ? formData.firstName : "",
+        lastName: formData.type === "provider" ? formData.lastName : "",
+        clinicName: formData.type === "clinic" ? formData.clinicName : "",
+      });
       onProviderCreated?.(data.provider);
       reset(initialProviderFormData);
       closeAddProviderModal();
@@ -107,138 +115,176 @@ export const AddProviderModal = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row mt-2">
-            <div className="col-12 md:col-6">
-              <Input
-                LabelText="First Name"
-                required
-                {...register("firstName", {
-                  required: "First name is required.",
-                  validate: (firstName) =>
-                    firstName.trim().length >= 2 || "First name is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.firstName?.message ?? ""}
-              </p>
-            </div>
-            <div className="col-12 md:col-6">
-              <Input
-                LabelText="Last Name"
-                required
-                {...register("lastName", {
-                  required: "Last name is required.",
-                  validate: (lastName) =>
-                    lastName.trim().length >= 2 || "Last name is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.lastName?.message ?? ""}
-              </p>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12 md:col-6">
+            <div className="col-12">
               <Select
                 options={providerTypes}
                 LabelText="Is this a provider or clinic?"
                 placeholder="Select a type"
-                required={false}
-                {...register("type")}
+                required
+                {...register("type", {
+                  required: "Type is required.",
+                })}
               />
               <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
                 {errors.type?.message ?? ""}
               </p>
             </div>
-            <div className="col-12 md:col-6">
-              <Input
-                LabelText="Provider Specialty"
-                required
-                {...register("specialty", {
-                  required: "Specialty is required.",
-                  validate: (specialty) =>
-                    specialty.trim().length >= 2 || "Specialty is required.",
-                })}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.specialty?.message ?? ""}
-              </p>
-            </div>
           </div>
-          <div className="row mt-2">
-            <div className="col-12">
-              <Input
-                LabelText="Phone Number"
-                required={false}
-                type="tel"
-                {...register("phoneNumber")}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.phoneNumber?.message ?? ""}
-              </p>
+          {providerType === "provider" && (
+            <div className="row mt-2">
+              <div className="col-12 md:col-6">
+                <Input
+                  LabelText="First Name"
+                  required
+                  {...register("firstName", {
+                    validate: (firstName) =>
+                      providerType !== "provider" ||
+                      firstName.trim().length >= 2 ||
+                      "First name is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.firstName?.message ?? ""}
+                </p>
+              </div>
+              <div className="col-12 md:col-6">
+                <Input
+                  LabelText="Last Name"
+                  required
+                  {...register("lastName", {
+                    validate: (lastName) =>
+                      providerType !== "provider" ||
+                      lastName.trim().length >= 2 ||
+                      "Last name is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.lastName?.message ?? ""}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12">
-              <Input
-                LabelText="Provider Image URL"
-                required={false}
-                placeholder="Google image link"
-                {...register("imageUrl")}
-              />
-              <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                {errors.imageUrl?.message ?? ""}
-              </p>
-            </div>
-          </div>
+          )}
           {providerType === "clinic" && (
+            <div className="row mt-2">
+              <div className="col-12">
+                <Input
+                  LabelText="Clinic Name"
+                  required
+                  {...register("clinicName", {
+                    validate: (clinicName) =>
+                      providerType !== "clinic" ||
+                      clinicName.trim().length >= 2 ||
+                      "Clinic name is required.",
+                  })}
+                />
+                <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                  {errors.clinicName?.message ?? ""}
+                </p>
+              </div>
+            </div>
+          )}
+          {providerType && (
             <>
+              <div className="row mt-2">
+                <div className="col-12 md:col-6">
+                  <Input
+                    LabelText={
+                      providerType === "clinic"
+                        ? "Clinic Type"
+                        : "Provider Specialty"
+                    }
+                    required
+                    {...register("specialty", {
+                      required: "Specialty is required.",
+                      validate: (specialty) =>
+                        specialty.trim().length >= 2 ||
+                        "Specialty is required.",
+                    })}
+                  />
+                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                    {errors.specialty?.message ?? ""}
+                  </p>
+                </div>
+                <div className="col-12 md:col-6">
+                  <Input
+                    LabelText="Phone Number"
+                    required={false}
+                    type="tel"
+                    {...register("phoneNumber")}
+                  />
+                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                    {errors.phoneNumber?.message ?? ""}
+                  </p>
+                </div>
+              </div>
               <div className="row mt-2">
                 <div className="col-12">
                   <Input
-                    LabelText="Street Address"
+                    LabelText={
+                      providerType === "clinic"
+                        ? "Clinic Image URL"
+                        : "Provider Image URL"
+                    }
                     required={false}
-                    {...register("streetAddress")}
+                    placeholder="Google image link"
+                    {...register("imageUrl")}
                   />
                   <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                    {errors.streetAddress?.message ?? ""}
+                    {errors.imageUrl?.message ?? ""}
                   </p>
                 </div>
               </div>
-              <div className="row mt-2">
-                <div className="col-12 md:col-6">
-                  <Input
-                    LabelText="City"
-                    required={false}
-                    {...register("city")}
-                  />
-                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                    {errors.city?.message ?? ""}
-                  </p>
-                </div>
-                <div className="col-12 md:col-6">
-                  <Select
-                    options={usStates}
-                    LabelText="State"
-                    required={false}
-                    {...register("state")}
-                  />
-                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                    {errors.state?.message ?? ""}
-                  </p>
-                </div>
-              </div>
-              <div className="row mt-2">
-                <div className="col-12 md:col-6">
-                  <Input
-                    LabelText="ZIP Code"
-                    required={false}
-                    {...register("zipCode")}
-                  />
-                  <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
-                    {errors.zipCode?.message ?? ""}
-                  </p>
-                </div>
-              </div>
+              {providerType === "clinic" && (
+                <>
+                  <div className="row mt-2">
+                    <div className="col-12">
+                      <Input
+                        LabelText="Street Address"
+                        required={false}
+                        {...register("streetAddress")}
+                      />
+                      <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                        {errors.streetAddress?.message ?? ""}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="row mt-2">
+                    <div className="col-12 md:col-6">
+                      <Input
+                        LabelText="City"
+                        required={false}
+                        {...register("city")}
+                      />
+                      <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                        {errors.city?.message ?? ""}
+                      </p>
+                    </div>
+                    <div className="col-12 md:col-6">
+                      <Select
+                        options={usStates}
+                        LabelText="State"
+                        required={false}
+                        {...register("state")}
+                      />
+                      <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                        {errors.state?.message ?? ""}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="row mt-2">
+                    <div className="col-12 md:col-6">
+                      <Input
+                        LabelText="ZIP Code"
+                        required={false}
+                        {...register("zipCode")}
+                      />
+                      <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
+                        {errors.zipCode?.message ?? ""}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </>
           )}
           <div className="row mt-2">

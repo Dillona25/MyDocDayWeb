@@ -6,6 +6,7 @@ export function mapProviderRow(row: ProviderRow): ReturnedProvider {
     userId: row.user_id,
     firstName: row.first_name,
     lastName: row.last_name,
+    clinicName: row.clinic_name,
     specialty: row.specialty,
     type: row.type,
     phoneNumber: row.phone_number,

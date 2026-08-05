@@ -25,7 +25,7 @@ export const Button = ({
       "button-secondary cursor-pointer text-sm font-bold disabled:cursor-not-allowed disabled:opacity-50";
   }
 
-  let baseClass = `text-sm font-bold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${className ?? "text-white"}`;
+  const baseClass = `text-sm font-bold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${className ?? "text-white"}`;
 
   return (
     <button

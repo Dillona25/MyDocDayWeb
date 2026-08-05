@@ -2,8 +2,9 @@ export type ProviderType = "provider" | "clinic";
 
 export type CreateProviderInput = {
   userId: number;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  clinicName?: string;
   specialty: string;
   type: ProviderType;
   phoneNumber?: string;
@@ -22,8 +23,9 @@ export type DeleteProviderInput = {
 export type ReturnedProvider = {
   id: number;
   userId: number;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
+  clinicName: string | null;
   specialty: string;
   type: ProviderType;
   phoneNumber: string | null;
@@ -39,8 +41,9 @@ export type ReturnedProvider = {
 export type ProviderRow = {
   id: number;
   user_id: number;
-  first_name: string;
-  last_name: string;
+  first_name: string | null;
+  last_name: string | null;
+  clinic_name: string | null;
   specialty: string;
   type: ProviderType;
   phone_number: string | null;

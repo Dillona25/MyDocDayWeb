@@ -78,13 +78,14 @@ export const AddAppointmentModal = () => {
   }
 
   const providerOptions = [
-    ...providers
-      .filter((provider) => provider.type === "provider")
-      .map((provider) => ({
-        label: `Dr. ${provider.firstName} ${provider.lastName}`,
-        value: String(provider.id),
-      })),
-    { label: "Add a different doctor", value: otherDoctorValue },
+    ...providers.map((provider) => ({
+      label:
+        provider.type === "clinic"
+          ? (provider.clinicName ?? "Clinic")
+          : `Dr. ${[provider.firstName, provider.lastName].filter(Boolean).join(" ")}`,
+      value: String(provider.id),
+    })),
+    { label: "Add a different provider or clinic", value: otherDoctorValue },
   ];
 
   async function onSubmit(formData: AppointmentFormData) {
@@ -213,11 +214,11 @@ export const AddAppointmentModal = () => {
             <div className="col-12">
               <Select
                 options={providerOptions}
-                LabelText="Which Doctor?"
-                placeholder="Select a doctor"
+                LabelText="Which Provider or Clinic?"
+                placeholder="Select a provider or clinic"
                 required
                 {...register("providerId", {
-                  required: "Doctor is required.",
+                  required: "Provider or clinic is required.",
                 })}
               />
               <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">
@@ -229,13 +230,13 @@ export const AddAppointmentModal = () => {
             <div className="row mt-2">
               <div className="col-12">
                 <Input
-                  LabelText="Doctor Name"
+                  LabelText="Provider or Clinic Name"
                   required
                   {...register("doctorName", {
                     validate: (doctorName) =>
                       selectedProviderId !== otherDoctorValue ||
                       doctorName.trim().length >= 2 ||
-                      "Doctor name is required.",
+                      "Provider or clinic name is required.",
                   })}
                 />
                 <p className="mt-2 min-h-5 text-xs font-semibold text-red-400">

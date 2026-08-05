@@ -67,6 +67,7 @@ export async function createAppointment(
         inserted_appointment.appointment_type,
         COALESCE(
           inserted_appointment.doctor_name,
+          providers.clinic_name,
           CONCAT('Dr. ', providers.first_name, ' ', providers.last_name)
         ) AS doctor_name,
         inserted_appointment.created_at,

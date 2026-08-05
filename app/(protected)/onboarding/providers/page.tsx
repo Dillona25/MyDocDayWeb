@@ -69,6 +69,7 @@ export default function ProvidersOnboardingPage() {
                     <ProviderWidget
                       firstName={provider.firstName}
                       lastName={provider.lastName}
+                      clinicName={provider.clinicName}
                       specialty={provider.specialty}
                       type={provider.type}
                       phoneNumber={provider.phoneNumber ?? undefined}

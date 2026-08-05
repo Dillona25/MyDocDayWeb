@@ -1,6 +1,7 @@
 interface ProviderWidgetProps {
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  clinicName?: string | null;
   specialty: string;
   type?: "provider" | "clinic";
   phoneNumber?: string;
@@ -14,6 +15,7 @@ interface ProviderWidgetProps {
 export const ProviderWidget = ({
   firstName,
   lastName,
+  clinicName,
   specialty,
   type = "provider",
   phoneNumber,
@@ -23,8 +25,14 @@ export const ProviderWidget = ({
   zipCode,
   onDelete,
 }: ProviderWidgetProps) => {
-  const fullName = `${firstName} ${lastName}`;
-  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  const displayName =
+    type === "clinic"
+      ? (clinicName ?? "Clinic")
+      : [firstName, lastName].filter(Boolean).join(" ");
+  const initials =
+    type === "clinic"
+      ? displayName.charAt(0).toUpperCase()
+      : `${firstName?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
   const widgetLabel = type === "clinic" ? "Clinic" : "Provider";
   const location = [city, state].filter(Boolean).join(", ");
 
@@ -33,7 +41,7 @@ export const ProviderWidget = ({
       <div className="flex items-start gap-4">
         {imageUrl ? (
           <img
-            alt={fullName}
+            alt={displayName}
             className="size-16 shrink-0 rounded-lg object-cover"
             src={imageUrl}
           />
@@ -51,7 +59,7 @@ export const ProviderWidget = ({
             {onDelete && (
               <button
                 type="button"
-                aria-label={`Delete ${fullName}`}
+                aria-label={`Delete ${displayName}`}
                 className="shrink-0 cursor-pointer text-[11px] font-semibold text-slate-400 hover:text-red-600"
                 onClick={onDelete}
               >
@@ -60,7 +68,7 @@ export const ProviderWidget = ({
             )}
           </div>
           <h2 className="mt-1 truncate text-lg font-semibold text-primary">
-            {fullName}
+            {displayName}
           </h2>
           <p className="text-sm font-medium text-slate-700">{specialty}</p>
         </div>

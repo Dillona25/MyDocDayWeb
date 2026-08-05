@@ -15,6 +15,7 @@ export async function createProvider(
         user_id,
         first_name,
         last_name,
+        clinic_name,
         specialty,
         type,
         phone_number,
@@ -24,12 +25,13 @@ export async function createProvider(
         state,
         zip_code
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       RETURNING
         id,
         user_id,
         first_name,
         last_name,
+        clinic_name,
         specialty,
         type,
         phone_number,
@@ -43,8 +45,9 @@ export async function createProvider(
     `,
     [
       input.userId,
-      input.firstName,
-      input.lastName,
+      input.type === "provider" ? input.firstName : undefined,
+      input.type === "provider" ? input.lastName : undefined,
+      input.type === "clinic" ? input.clinicName : undefined,
       input.specialty,
       input.type,
       input.phoneNumber,
