@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/app/components/common/button";
+import { CreateAccountLink } from "@/app/components/auth/create-account-link";
 import { EarlyAccessBanner } from "@/app/components/common/early-access-banner";
 import { useModal } from "@/app/store/modalContext";
 import Link from "next/link";
@@ -93,9 +94,9 @@ export default function Home() {
 
           <div className="hidden items-center justify-end gap-4 lg:flex">
             <Button buttonText="Sign in" onClick={openSignInModal} />
-            <Link href="/onboarding/">
+            <CreateAccountLink>
               <Button buttonText="Create Account" varient="primary" />
-            </Link>
+            </CreateAccountLink>
           </div>
 
           <button
@@ -140,9 +141,9 @@ export default function Home() {
             </div>
 
             <div className="mobile-menu-actions mt-auto border-t border-white/10 pt-6">
-              <Link href="/onboarding/" onClick={closeMobileMenu}>
+              <CreateAccountLink onNavigate={closeMobileMenu}>
                 <Button buttonText="Create Account" varient="primary" />
-              </Link>
+              </CreateAccountLink>
               <Button
                 buttonText="Sign in"
                 className="mt-4"
@@ -179,9 +180,9 @@ export default function Home() {
                   members you support.
                 </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
-                  <Link href="/onboarding/">
+                  <CreateAccountLink>
                     <Button varient="primary" buttonText="Create Account" />
-                  </Link>
+                  </CreateAccountLink>
                   <a href="#features" className="button-secondary">
                     See Launch Features
                   </a>
@@ -253,9 +254,9 @@ export default function Home() {
               </div>
               <div className="col-12 lg:col-4">
                 <div className="flex lg:justify-end">
-                  <Link href="/onboarding/">
+                  <CreateAccountLink>
                     <Button varient="primary" buttonText="Create Account" />
-                  </Link>
+                  </CreateAccountLink>
                 </div>
               </div>
             </div>
