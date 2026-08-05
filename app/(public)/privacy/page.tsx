@@ -37,6 +37,16 @@ export default function PrivacyPage() {
               policy with clear details about data collection, storage, sharing,
               account deletion, and data deletion.
             </p>
+            <p>
+              To request account deletion, email{" "}
+              <a
+                className="font-semibold text-primary underline underline-offset-4 hover:text-primary-light"
+                href="mailto:dillonarnold02@outlook.com"
+              >
+                dillonarnold02@outlook.com
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

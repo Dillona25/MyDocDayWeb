@@ -274,6 +274,20 @@ export default function Home() {
             <Link className="hover:text-slate-950" href="/privacy">
               Privacy Statement
             </Link>
+            <a
+              className="hover:text-slate-950"
+              href="mailto:dillonarnold02@outlook.com"
+            >
+              Contact
+            </a>
+            <a
+              className="hover:text-slate-950"
+              href="https://www.linkedin.com/in/dillonarnold/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </footer>
