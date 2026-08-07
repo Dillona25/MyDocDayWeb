@@ -1,8 +1,5 @@
-import { cookies } from "next/headers";
-import { AppError } from "@/backend/errors/app-error";
 import { handleApiError } from "@/backend/errors/handle-api-error";
-import { db } from "@/backend/lib/db";
-import { SESSION_COOKIE_NAME } from "@/backend/services/auth/session-cookie";
+import { getApiSession } from "@/backend/services/auth/get-api-session";
 import { getAppointments } from "@/backend/services/appointments/get/get-appointments";
 import { createAppointment } from "@/backend/services/appointments/post/create-appointment";
 import { deleteAppointment } from "@/backend/services/appointments/delete/delete-appointment";
@@ -13,41 +10,9 @@ import {
 
 export const runtime = "nodejs";
 
-type SessionUserRow = {
-  user_id: number;
-};
-
-async function getSessionUserId(): Promise<number> {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get(SESSION_COOKIE_NAME)?.value;
-
-  if (!sessionId) {
-    throw new AppError("You must be signed in.", 401, "UNAUTHORIZED");
-  }
-
-  const sessionResult = await db.query<SessionUserRow>(
-    `
-      SELECT user_id
-      FROM sessions
-      WHERE id = $1
-        AND expires_at > CURRENT_TIMESTAMP
-      LIMIT 1
-    `,
-    [sessionId],
-  );
-
-  const session = sessionResult.rows[0];
-
-  if (!session) {
-    throw new AppError("Your session has expired.", 401, "SESSION_EXPIRED");
-  }
-
-  return session.user_id;
-}
-
-export async function GET(): Promise<Response> {
+export async function GET(request: Request): Promise<Response> {
   try {
-    const userId = await getSessionUserId();
+    const { userId } = await getApiSession(request);
     const appointments = await getAppointments(userId);
 
     return Response.json(
@@ -77,7 +42,7 @@ export async function POST(request: Request): Promise<Response> {
       );
     }
 
-    const userId = await getSessionUserId();
+    const { userId } = await getApiSession(request);
     const appointment = await createAppointment({
       userId,
       ...validationResult.data,
@@ -110,7 +75,7 @@ export async function DELETE(request: Request): Promise<Response> {
       );
     }
 
-    const userId = await getSessionUserId();
+    const { userId } = await getApiSession(request);
 
     await deleteAppointment({
       userId,

@@ -2,10 +2,10 @@ import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 import { db } from "@/backend/lib/db";
 import { AppError } from "@/backend/errors/app-error";
+import { getCurrentUser } from "@/backend/services/auth/current-user";
 import type { SignInInput } from "@/backend/services/auth/sign-in/sign-in-schema";
 import type {
   CurrentUser,
-  CurrentUserRow,
   SessionRow,
   SignInUserRow,
 } from "@/backend/services/auth/sign-in/sign-in-types";
@@ -91,56 +91,13 @@ export async function signIn(input: SignInInput): Promise<{
     [userRow.id],
   );
 
-  const currentUserResult = await db.query<CurrentUserRow>(
-    `
-      SELECT
-        users.id,
-        users.email,
-        users.first_name,
-        users.last_name,
-        users.city,
-        users.state,
-        users.is_active,
-        user_onboarding.current_step AS onboarding_current_step,
-        user_onboarding.completed_steps AS onboarding_completed_steps,
-        user_onboarding.is_complete AS onboarding_is_complete
-      FROM users
-      INNER JOIN user_onboarding
-        ON user_onboarding.user_id = users.id
-      WHERE users.id = $1
-      LIMIT 1
-    `,
-    [userRow.id],
-  );
-
-  const currentUserRow = currentUserResult.rows[0];
-
-  if (!currentUserRow) {
-    throw new Error("PostgreSQL did not return the signed-in user.");
-  }
+  const currentUser = await getCurrentUser(userRow.id);
 
   return {
-    user: mapCurrentUser(currentUserRow),
+    user: currentUser,
     session: {
       id: sessionRow.id,
       expiresAt: sessionRow.expires_at,
-    },
-  };
-}
-
-function mapCurrentUser(row: CurrentUserRow): CurrentUser {
-  return {
-    id: row.id,
-    email: row.email,
-    firstName: row.first_name,
-    lastName: row.last_name,
-    city: row.city,
-    state: row.state,
-    isActive: row.is_active,
-    onboarding: {
-      currentStep: row.onboarding_current_step,
-      completedSteps: row.onboarding_completed_steps,
-      isComplete: row.onboarding_is_complete,
     },
   };
 }
