@@ -27,11 +27,16 @@ export async function POST(request: Request): Promise<Response> {
       {
         message: "Signed in successfully.",
         user,
+        session: {
+          token: session.id,
+          expiresAt: session.expiresAt,
+        },
       },
       { status: 200 },
     );
 
-    // Seeting a session cookie after sign in.
+    // Web uses this HTTP-only cookie. Mobile can ignore the cookie and store
+    // the returned session token instead.
     response.cookies.set({
       name: SESSION_COOKIE_NAME,
       value: session.id,
